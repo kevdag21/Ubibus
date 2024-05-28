@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    color: "#FF7D3E",
+    color: "#4DC846",
     width: 330,
     height: 50,
     alignSelf: "center",

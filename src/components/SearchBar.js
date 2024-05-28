@@ -10,32 +10,39 @@ export function SearchBar ({ currentLocation, onSearch = () => {} }) {
       const location = placeDetail.result.geometry.location
       location.name = placeDetail.result.name
       onSearch(location)
+
+      container: {
+          bottom: Platform.select({ ios: "16%", android: "12%" })
+      }
     })
+
+    
   }
 
   return (
     <>
       <GooglePlacesAutocomplete
-        placeholder='Buscar'
+        placeholder="Buscar"
         onPress={(search) => {
-          handleSearch(search)
+          handleSearch(search);
         }}
+ 
         query={{
-          key: 'AIzaSyBNLEE0e6JiPHJh88NuSvdOLBggmS43Mv0',
-          language: 'es',
-          components: 'country:mx',
+          key: "AIzaSyDNg52BASakvP6Os7gOxyk3ccAvYMsjKu4",
+          language: "es",
+          components: "country:mx",
           radius: 5000,
           location: `${currentLocation.coords.latitude}, ${currentLocation.coords.longitude}`,
-          strictbounds: true
+          strictbounds: true,
         }}
         styles={{
           container: {
-            position: 'absolute',
-            top: Platform.select({ ios: '12%', android: '12%' }),
-            width: '100%'
-          }
+            position: "absolute",
+            top: Platform.select({ ios: "15%", android: "12%" }),
+            width: "100%",
+          },
         }}
       />
     </>
-  )
+  );
 }

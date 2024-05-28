@@ -11,22 +11,12 @@ export function EditCard ({ navigation, route }) {
   const { card } = route.params
 
   const handlePressButton = async ({ postalCode, name }) => {
-    if (idUserType === userType.DRIVER) {
-      await updateDriverCard({
-        idAccount: idStripe,
-        idCard: card.id,
-        name,
-        postal_code: postalCode
-      })
-    } else {
       await updatePassengerPaymentMethod({
         idCustomer: idStripe,
         idPaymentMethod: card.id,
         name,
         postal_code: postalCode
       })
-    }
-
     navigation.goBack()
   }
 

@@ -18,18 +18,13 @@ function HomePassenger ({ navigation }) {
 
   useEffect(() => {
     if (dataIsLoaded && !userData.idUserType) {
-      if (signInLike === 'passenger') navigation.navigate('CompletePassengerProfile')
-      if (signInLike === 'driver') navigation.navigate('CompleteDriverProfile')
+      navigation.navigate('CompletePassengerProfile')
     }
   }, [dataIsLoaded])
 
   return (
     <View style={styles.container}>
-      <Image
-        source={getImage()}
-        style={styles.img}
-        resizeMode="contain"
-      />
+      <PassengerMapContainer currentLocation={location} />
     </View>
   );
 }

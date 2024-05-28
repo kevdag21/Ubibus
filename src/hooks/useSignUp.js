@@ -32,27 +32,5 @@ export function useSignUp ({ usertype }) {
     setIsLoading(false)
   }
 
-  const signUpDriver = async ({ email, password, name, phone, drivingLicense, city, brand, model, year, licensePlate }) => {
-    setIsLoading(true)
-
-    const id = await createUser({ email, password })
-
-    const { error } = await supabase.rpc('completeDriverProfile', {
-      profiletoupdate: id,
-      newname: name,
-      newphone: phone,
-      newdrivinglicense: drivingLicense,
-      newcity: city,
-      newmodel: model,
-      newbrand: brand,
-      newyear: year,
-      newlicenseplate: licensePlate
-    })
-
-    if (error) setError(error)
-    setIsLoading(false)
-  }
-
-  if (usertype === 'passenger') return { isLoading, error, signUp: signUpPassenger }
-  if (usertype === 'driver') return { isLoading, error, signUp: signUpDriver }
+  return { isLoading, error, signUp: signUpPassenger }
 }

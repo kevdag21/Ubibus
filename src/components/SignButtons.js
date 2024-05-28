@@ -12,31 +12,16 @@ export function SignButtons ({ navigation, userType }) {
           title="INICIAR SESIÓN"
           onPress={() => moveToSignIn()}
           buttonStyle={styles.button}
-          color="#FF7D3E"
+          color="#4DC846"
         />
         <Button
           title="REGISTRARSE"
           onPress={() => moveToSignUp()}
-          color="#FF7D3E"
+          color="#4DC846"
           buttonStyle={styles.button}
         />
       </View>
-      <Text
-        style={styles.switchUserType}
-        onPress={
-          userType === "passenger"
-            ? () =>
-                navigation.navigate("DriverCarousel", {
-                  animation: "slide_from_bottom",
-                })
-            : () =>
-                navigation.navigate("PassengerCarousel", {
-                  animation: "slide_from_bottom",
-                })
-        }
-      >
-        {userType === "passenger" ? "¿Eres concesionario?" : "¿Eres pasajero?"}
-      </Text>
+
     </View>
   );
 }

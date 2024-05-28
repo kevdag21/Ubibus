@@ -11,8 +11,8 @@ import SignInLikeContext from '../context/SingInLikeContext'
 
 export function SignIn ({ route }) {
   const { setSignInLike } = useContext(SignInLikeContext)
-  const { userType } = route.params
-  const [page, setPage] = useState(route.params?.page || 2);
+  const { userType } = "passenger";
+  const [page, setPage] = useState(route.params?.page || 1);
   const { isLoading: isLoadingFacebook, error: errorFacebook, signIn: signInWithFacebook } = useSignInWithProvider({ provider: 'facebook' })
   const { isLoading: isLoadingGoogle, error: errorGoogle, signIn: signInWithGoogle } = useSignInWithProvider({ provider: 'google' })
   const { isLoading: isLoadingEmail, error: errorEmail, signIn } = useSignInWithEmail()
@@ -51,14 +51,13 @@ export function SignIn ({ route }) {
 
     const getImage = () => {
       if (page === 0) return require("../../assets/Passenger_1.png");
-      if (page === 1) return require("../../assets/Passenger_2.png");
+      if (page === 1) return require("../../assets/logo.png");
       if (page === 2) return require("../../assets/Passenger_3.png");
     };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-      </View>
+      <View style={styles.header}></View>
       <Image source={getImage()} style={styles.img} resizeMode="contain" />
       <InputStyled
         name="email"
@@ -81,7 +80,7 @@ export function SignIn ({ route }) {
         title="Iniciar sesión"
         disabled={isLoadingEmail}
         onPress={handlePressButton}
-        color="#FF7D3E"
+        color="#4DC846"
         buttonStyle={styles.button}
       />
       <View style={styles.providers}>
@@ -111,35 +110,34 @@ export function SignIn ({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    alignContent: 'center'
+    alignContent: "center",
   },
   header: {
-    alignSelf: 'center',
-    width: 335
+    alignSelf: "center",
+    width: 335,
   },
   title: {
-    fontFamily: 'OpenSans-Bold',
-    textAlign: 'left',
+    fontFamily: "OpenSans-Bold",
+    textAlign: "left",
     fontSize: 24,
-    marginBottom: 13
+    marginBottom: 13,
   },
   providers: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   button: {
     marginTop: 20,
-    color: '#8946A6',
+    color: "#4DC846",
     width: 330,
     height: 50,
-    alignSelf: 'center',
-    borderRadius: 10
+    alignSelf: "center",
+    borderRadius: 10,
   },
-    img: {
+  img: {
     height: 197,
     width: 302,
-    alignSelf: 'center',
-    marginBottom: 50
-    
+    alignSelf: "center",
+    marginBottom: 50,
   },
-})
+});

@@ -34,8 +34,7 @@ export default function ProfileDetails ({ navigation }) {
   )
 
   useEffect(() => {
-    const userType = userData.idUserType === 1 ? 'driver' : 'passenger'
-    if (userType === 'passenger') {
+
       const getPassenger = async () => {
         const { data } = await supabase
           .from('passenger')
@@ -44,18 +43,7 @@ export default function ProfileDetails ({ navigation }) {
         setEmergencyPhone(data[0].emergencyphone)
       }
       getPassenger()
-    } else if (userType === 'driver') {
-      const getDriver = async () => {
-        const { data } = await supabase
-          .from('driver')
-          .select('city, drivinglicense')
-          .eq('id', userData.id)
-        setDrivingLicense(data[0].drivinglicense)
-        setValidatedDrivingLicense(data[0].drivinglicense)
-        setCity(data[0].city)
-      }
-      getDriver()
-    }
+    
   }, [])
 
   const updateData = async () => {
@@ -71,13 +59,9 @@ export default function ProfileDetails ({ navigation }) {
         await validatePhone(phone)
       }
 
-      if (userData.idUserType === 1) {
-        drivingLicense !== validatedDrivingLicense
-          ? await validateDrivingLicenseAndCity(drivingLicense, city)
-          : validateCity(city)
-      } else if (userData.idUserType === 2) {
+     
         validateEmergencyPhone(emergencyPhone)
-      }
+      
     } catch (error) {
       setErrorMessage(error)
       setLoading(false)
@@ -87,11 +71,6 @@ export default function ProfileDetails ({ navigation }) {
     const { error } = await supabase
       .from('profile')
       .update({ name, phone })
-      .eq('id', userData.id)
-      .select()
-    const { error: errorDriver } = await supabase
-      .from('driver')
-      .update({ drivinglicense: drivingLicense, city })
       .eq('id', userData.id)
       .select()
     const { error: errorPassenger } = await supabase
@@ -111,7 +90,7 @@ export default function ProfileDetails ({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ModalSuccessfulProfileUpdate visible={updated} onPress={() => setUpdated(false)} />
       <View style={styles.avatarSection}>
         <Thumbnail
@@ -161,49 +140,21 @@ export default function ProfileDetails ({ navigation }) {
           placeholder='Telefono'
           inputMode='tel'
         />
-        {userData.idUserType === 2
-          ? (
-            <InputStyled
-              leftIcon={<Icon name='phone' size={30} />}
-              value={emergencyPhone}
-              onChangeText={(text) => {
-                setEmergencyPhone(text)
-                setSave(true)
-              }}
-              errorMessage={errorMessage}
-              name='emergencyPhone'
-              placeholder='Teléfono de emergencia'
-              inputMode='tel'
-            />
-            )
-          : (
-            <View>
-              <InputStyled
-                leftIcon={<Icon name='info' size={30} />}
-                value={drivingLicense}
-                onChangeText={(text) => {
-                  setDrivingLicense(text)
-                  setSave(true)
-                }}
-                errorMessage={errorMessage}
-                name='drivingLicense'
-                placeholder='Número de licencia de conducir'
-                inputMode='text'
-              />
-              <InputStyled
-                leftIcon={<Icon name='place' size={30} />}
-                value={city}
-                onChangeText={(text) => {
-                  setCity(text)
-                  setSave(true)
-                }}
-                name='city'
-                placeholder='Ciudad'
-                inputMode='text'
-                errorMessage={errorMessage}
-              />
-            </View>
-            )}
+
+           <InputStyled
+            leftIcon={<Icon name='phone' size={30} />}
+            value={emergencyPhone}
+            onChangeText={(text) => {
+              setEmergencyPhone(text)
+              setSave(true)
+            }}
+            errorMessage={errorMessage}
+            name='emergencyPhone'
+            placeholder='Teléfono de emergencia'
+            inputMode='tel'
+           />
+        
+            
         <InputStyled
           leftIcon={<Icon name='lock' size={30} />}
           title='Contraseña'
@@ -223,7 +174,7 @@ export default function ProfileDetails ({ navigation }) {
             )
           : null}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -235,9 +186,10 @@ const styles = StyleSheet.create({
   avatarSection: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FF7D3E",
+    backgroundColor: "#4DC846",
+    paddingTop: "15%",
     marginBottom: 20,
-    height: "20%",
+    height: "25%",
   },
   detailsSection: {
     flex: 1,

@@ -1,10 +1,28 @@
 import { StyleSheet, View, Dimensions } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_DEFAULT, Marker } from "react-native-maps";
 
 export function MapContainer({ currentLocation, children }) {
   return (
     <View style={styles.container}>
-      <Image source={'../../assets/MAPA.PNG'} style={styles.img} resizeMode="contain" />
+      <MapView
+        provider={PROVIDER_DEFAULT}
+        style={styles.mapStyle}
+        initialRegion={{
+          latitude: 18,
+          longitude: -94,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+        region={{
+          latitude: currentLocation.coords.latitude,
+          longitude: currentLocation.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+        mapType="standard"
+      >
+        {children}
+      </MapView>
     </View>
   );
 }

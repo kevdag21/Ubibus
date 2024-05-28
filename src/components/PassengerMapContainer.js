@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useRef } from 'react'
 import { StyleSheet, View, Dimensions, Alert } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_DEFAULT } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import { useNavigation } from '@react-navigation/native'
 import { confirmPayment, initStripe } from '@stripe/stripe-react-native'
@@ -73,6 +73,7 @@ export function PassengerMapContainer({ currentLocation }) {
     setService(id)
     setShowWonderSelector(false)
     setShowPaySelector(true)
+    setShowModalRating(true);
   }
 
   const handleConfirmTrip = async ({ childrenNumber, paymentMethodSelected }) => {
@@ -207,6 +208,8 @@ export function PassengerMapContainer({ currentLocation }) {
     }
 
     setDriver(null)
+    setShowSearchBar(true);
+
   }
 
   const handleOnPressTip = () => {
@@ -216,138 +219,88 @@ export function PassengerMapContainer({ currentLocation }) {
 
   return (
     <View style={styles.container}>
-      <ModalRating
-        userToRate={driver?.id}
-        visible={showModalRating}
-        onPress={handleOnPressRating}
-      />
-      <ModalTip
-        driverToSendTip={driver && driver}
-        visible={showModalTip}
-        onPress={handleOnPressTip}
-      />
-      <ModalDriverArrived
-        visible={showModalDriverArrived}
-        driver={driver}
-      />
+      <ModalDriverArrived visible={showModalDriverArrived} driver={driver} />
       <MapView
-        provider={PROVIDER_GOOGLE}
+        provider={PROVIDER_DEFAULT}
         style={styles.mapStyle}
         initialRegion={{
           latitude: 18,
           longitude: -94,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01
+          longitudeDelta: 0.01,
         }}
         region={{
           latitude: currentLocation.coords.latitude,
           longitude: currentLocation.coords.longitude,
           latitudeDelta: 0.01,
-          longitudeDelta: 0.01
+          longitudeDelta: 0.01,
         }}
-        mapType='standard'
+        mapType="standard"
       >
         <Marker
           draggable
           coordinate={{
             latitude: currentLocation.coords.latitude,
-            longitude: currentLocation.coords.longitude
+            longitude: currentLocation.coords.longitude,
           }}
-          title='Yo'
-          pinColor='purple'
+          title="Yo"
+          pinColor="green"
         />
-        {
-          searchLocation && (
-            <>
-              <MapViewDirections
-                origin={{
-                  latitude: currentLocation.coords.latitude,
-                  longitude: currentLocation.coords.longitude
-                }}
-                destination={{
-                  latitude: searchLocation.lat,
-                  longitude: searchLocation.lng
-                }}
-                apikey='AIzaSyBNLEE0e6JiPHJh88NuSvdOLBggmS43Mv0'
-                strokeWidth={3}
-                strokeColor='pink'
-                onReady={handleOnSelectEndpoint}
-              />
-              <Marker
-                draggable={false}
-                coordinate={{
-                  latitude: searchLocation.lat,
-                  longitude: searchLocation.lng
-                }}
-                title='Marcador'
-                pinColor='hotpink'
-              />
-            </>
-          )
-        }
-        {
-          driverLocation && (
-            <Marker
-              draggable
-              coordinate={{
-                latitude: driverLocation.latitude,
-                longitude: driverLocation.longitude
+        {searchLocation && (
+          <>
+            <MapViewDirections
+              origin={{
+                latitude: currentLocation.coords.latitude,
+                longitude: currentLocation.coords.longitude,
               }}
-              title='Conductora'
-              pinColor='purple'
+              destination={{
+                latitude: searchLocation.lat,
+                longitude: searchLocation.lng,
+              }}
+              apikey="AIzaSyDNg52BASakvP6Os7gOxyk3ccAvYMsjKu4"
+              strokeWidth={3}
+              strokeColor="green"
+              onReady={handleOnSelectEndpoint}
             />
-          )
-        }
+            <Marker
+              draggable={false}
+              coordinate={{
+                latitude: searchLocation.lat,
+                longitude: searchLocation.lng,
+              }}
+              title="Marcador"
+              pinColor="orange"
+            />
+          </>
+        )}
       </MapView>
-      {
-        showSearchBar && (
-          <SearchBar
-            currentLocation={currentLocation}
-            onSearch={handleSearch}
-          />
-        )
-      }
-      {
-        showWonderSelector && (
-          <WonderSelector
-            wonders={wonders}
-            origin={(currentLocation.street) ? currentLocation.street.concat(' #', currentLocation.streetNumber) : currentLocation.name}
-            destination={searchLocation.name}
-            onSelectWonder={handleSelectWonder}
-          />
-        )
-      }
-      {
-        showPaySelector && (
-          <PayChildrenSelector
-            origin={(currentLocation.street) ? currentLocation.street.concat(' #', currentLocation.streetNumber) : currentLocation.name}
-            destination={searchLocation.name}
-            onPress={handleConfirmTrip}
-          />
-        )
-      }
-      {
-        showWaitSelector && (
-          <WaitSelector onPress={handleCancel} />
-        )
-      }
-      {
-        showManageTrip && (
-          <ManageTripPassenger
-            driver={driver}
-            onCancelledTrip={handleCancel}
-            origin={(currentLocation.street) ? currentLocation.street.concat(' #', currentLocation.streetNumber) : currentLocation.name}
-            destination={searchLocation.name}
-          />
-        )
-      }
-      {
-        showToEndpoint && <ToEndpointPassenger
-          driver={driver}
+      {showSearchBar && (
+        <SearchBar currentLocation={currentLocation} onSearch={handleSearch} />
+      )}
+      {showWonderSelector && (
+        <WonderSelector
+          origin={
+            currentLocation.street
+              ? currentLocation.street.concat(
+                  " #",
+                  currentLocation.streetNumber
+                )
+              : currentLocation.name
+          }
+          destination={searchLocation.name}
+          onSelectWonder={handleSelectWonder}
         />
-      }
+      )}
+      {showModalRating && (
+        <ModalRating
+          userToRate={driver?.id}
+          visible={showModalRating}
+          onPress={handleOnPressRating}
+        />
+      )}
+      {showToEndpoint && <ToEndpointPassenger driver={driver} />}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

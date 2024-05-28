@@ -11,9 +11,6 @@ import userType from '../utils/userType'
 import { supabase } from '../services/supabase'
 
 import { HomePassenger } from '../pages/HomePassenger'
-import { HomeDriver } from '../pages/HomeDriver'
-import Trip from '../pages/Trip'
-import VehicleDetails from '../pages/VehicleDetails'
 
 const Drawer = createDrawerNavigator()
 
@@ -35,22 +32,22 @@ function SideBar () {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerTitle: '',
-        headerTransparent: true
+        headerTitle: "",
+        headerTransparent: true,
       }}
-      drawerContent={props => <CustomDrawerContent {...props} />}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name='Mapa' component={idUserType === userType.DRIVER ? HomeDriver : HomePassenger} />
-      <Drawer.Screen name='Información de usuario' component={Profile} />
-      {idUserType === userType.DRIVER ? <Drawer.Screen name='Información del vehículo' component={VehicleDetails} /> : null}
-      <Drawer.Screen name='Viajes realizados' component={Trip} />
       <Drawer.Screen
-        name='Cards' component={Cards} options={{
-          drawerLabel: idUserType === userType.DRIVER ? 'Métodos de cobro' : 'Métodos de pago'
-        }}
+        name="Mapa"
+        component={HomePassenger}
+      />
+      <Drawer.Screen name="Información de usuario" component={Profile} />
+      <Drawer.Screen
+        name="Métodos de pago"
+        component={Cards}
       />
     </Drawer.Navigator>
-  )
+  );
 }
 
 export { SideBar }

@@ -84,7 +84,7 @@ export function ChangePassword ({ navigation }) {
       <Button
         title="Guardar cambios"
         buttonStyle={styles.button}
-        color="#FF7D3E"
+        color="#4DC846"
         onPress={handleOnPress}
       />
     </View>
@@ -94,12 +94,12 @@ export function ChangePassword ({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#4DC846",
   },
   avatarSection: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "#4DC846",
     marginBottom: 20,
 
     padding: "1%",

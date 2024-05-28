@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { SideBar } from './SideBar'
-import Message from '../pages/Message'
 
 const Stack = createNativeStackNavigator()
 
@@ -12,7 +11,6 @@ function ProfileComplete () {
       }}
     >
       <Stack.Screen name='SideBar' component={SideBar} />
-      <Stack.Screen name='Message' component={Message} />
     </Stack.Navigator>
   )
 }

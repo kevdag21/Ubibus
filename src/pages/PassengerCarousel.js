@@ -52,26 +52,9 @@ export function PassengerCarousel ({ navigation, route }) {
       </View>
       <View style={styles.bttcontainer}>
         {
-                    page === 2
-                      ? <SignButtons navigation={navigation} userType='passenger' />
-                      : <Button
-                          type='solid'
-                          size='sm'
-                          color='#8946A6'
-                          icon={{
-                            color: 'white',
-                            type: 'font-awesome',
-                            name: 'arrow-right'
-                          }}
-                          onPress={() => handleOnPress()}
-                          buttonStyle={{
-                            width: 44,
-                            height: 44,
-                            alignSelf: 'flex-end',
-                            borderRadius: 50,
-                            marginRight: 12
-                          }}
-                        />
+      
+      <SignButtons navigation={navigation} userType='passenger' />
+                     
                 }
       </View>
     </View>

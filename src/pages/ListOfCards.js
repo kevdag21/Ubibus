@@ -85,56 +85,66 @@ export function ListOfCards ({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Tarjetas
-      </Text>
+      <View style={styles.cardSection}>
+        <Text style={styles.text}>Tarjetas</Text>
+      </View>
       <View style={styles.cards}>
         <FlatList
           data={cards}
           renderItem={renderCard}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
         />
       </View>
       <Button
-        title='Agregar tarjeta'
-        type='clear'
+        title="Agregar tarjeta"
+        type="clear"
         buttonStyle={styles.button}
-        onPress={() => navigation.navigate('AddCard')}
+        onPress={() => navigation.navigate("AddCard")}
+        
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignContent: 'center',
-    backgroundColor: '#FFF',
-    paddingTop: '10%'
+    justifyContent: "flex-start",
+    alignContent: "center",
+    backgroundColor: "#FFF",
+  },
+  cardSection: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#4DC846",
+    paddingTop: "15%",
+    marginBottom: 20,
+    height: "15%",
   },
   text: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 10,
-    fontFamily: 'OpenSans-Bold',
-    fontSize: 17
+    fontFamily: "OpenSans-Bold",
+    fontSize: 17,
+    marginTop: "5%",
+    color: "#FFF",
   },
   cards: {
-    justifyContent: 'space-around'
+    justifyContent: "space-around",
   },
   button: {
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     borderRadius: 8,
     marginVertical: 10,
-    width: '80%',
-    alignSelf: 'center',
-    shadowColor: '#111',
+    width: "80%",
+    alignSelf: "center",
+    shadowColor: "#111",
     shadowOpacity: 12,
     shadowRadius: 5,
     shadowOffset: {
       height: 0,
-      width: 1
+      width: 1,
     },
-    elevation: 5
-  }
-})
+    elevation: 5,
+  },
+});
